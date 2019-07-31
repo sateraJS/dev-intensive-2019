@@ -8,11 +8,14 @@ object Plurals{
         val stringBuilder = StringBuilder()
         stringBuilder.append(value)
         stringBuilder.append(" ")
-        val result = when (value) {
-            1 -> getPluralFor1(timeUnits)
-            in 2..4 -> getPluralFor2To4(timeUnits)
-            else -> getPluralOther(timeUnits)
-        }
+        val myValue = (value % 100)
+        val result = if(myValue in 5..20) getPluralOther(timeUnits)
+        else
+            when (myValue % 10){
+                1 -> getPluralFor1(timeUnits)
+                in 2..4 -> getPluralFor2To4(timeUnits)
+                else -> getPluralOther(timeUnits)
+            }
         stringBuilder.append(result)
         return stringBuilder.toString()
     }
