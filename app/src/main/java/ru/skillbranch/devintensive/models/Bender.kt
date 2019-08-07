@@ -20,7 +20,7 @@ class Bender (
 
         return if(question.answers.contains(answer.toLowerCase())){
             question = question.nextQuestion()
-            "Отлично - это правильный ответ!\n${question.question}" to status.color
+            "Отлично - ты справился\n${question.question}" to status.color
         }
         else {
             if(status == Status.CRITICAL){
@@ -30,7 +30,7 @@ class Bender (
             }
             else{
                 status = status.nextStatus()
-                "Это неправильный ответ!\n${question.question}" to status.color
+                "Это неправильный ответ\n${question.question}" to status.color
             }
         }
     }
@@ -39,7 +39,7 @@ class Bender (
         NORMAL(Triple(255, 255, 255)),
         WARNING(Triple(255, 120, 0)),
         DANGER(Triple(255, 60, 60)),
-        CRITICAL(Triple(255, 255, 0));
+        CRITICAL(Triple(255, 0, 0));
 
         fun nextStatus(): Status {
             return if (this.ordinal < values().lastIndex) {
@@ -100,7 +100,7 @@ class Bender (
                     else null
                 }
                 SERIAL -> {
-                    if (answer.contains("[^\\d]{7}".toRegex())) {
+                    if (answer.length != 7 || answer.contains("[^\\d]".toRegex())) {
                         "Серийный номер содержит только цифры, и их 7"
                     }
                     else null
